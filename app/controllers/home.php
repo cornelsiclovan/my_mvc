@@ -22,6 +22,11 @@ class Home extends Controller
         $this->view('home/manage_users', ['users' => $users]);
     }
     
+    public function getUser($username = '', $email= '')
+    {
+        
+    }
+    
     public function create($username = '', $email = '')
     {
         User::create([
@@ -32,7 +37,29 @@ class Home extends Controller
     
     public function updateName($username='', $email = '')
     {
-        $user = User::where('username', $email)->first();
-        var_dump($user->username);
+        if(isset($username) && $username != '' && isset($email) && $email != '')
+        {
+            $user = User::where('email', $email)->first();
+            if($user != null)
+            {
+                $user->username = $username;
+                $user->save();
+            }
+            //var_dump($user->username);
+        }
+    }
+    
+    public function updateEmail($username='', $email = '')
+    {
+        if(isset($username) && $username != '' && isset($email) && $email != '')
+        {
+            $user = User::where('username', $username)->first();
+            if($user != null)
+            {
+                $user->username = $email;
+                $user->save();
+            }
+            //var_dump($user->username);
+        }
     }
 }
